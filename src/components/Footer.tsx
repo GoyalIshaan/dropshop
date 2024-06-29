@@ -9,7 +9,7 @@ import {
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-gray-900 text-white py-8 w-full fixed bottom-0">
+    <footer className="bg-gray-900 text-white py-8 w-full mt-[100px] bottom-0">
       <div className="container mx-auto flex flex-wrap justify-between px-10">
         <div className="flex-1 mb-8 md:mb-0">
           <h2 className="text-2xl font-bold mb-4">DropShop</h2>

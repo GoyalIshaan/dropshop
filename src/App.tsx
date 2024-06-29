@@ -1,15 +1,30 @@
-import React from 'react';
-import Header from './components/Header';
-import Footer from './components/Footer';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import AppLayout from './AppLayout';
+import Products from './pages/Products';
+import ProductDetails from './pages/ProductDetails';
+import NotFound from './pages/NotFound';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <AppLayout />,
+    children: [
+      {
+        index: true,
+        element: <Products />,
+      },
+      {
+        path: 'products/:id',
+        element: <ProductDetails />,
+      },
+    ],
+  },
+  {
+    path: '*',
+    element: <NotFound />,
+  },
+]);
 
 export default function App() {
-  return (
-    <>
-      <Header />
-      <h1 className="text-4xl font-bold text-slate-950 mx-6 my-4">
-        Welcome To DropShop,
-      </h1>
-      <Footer />
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
