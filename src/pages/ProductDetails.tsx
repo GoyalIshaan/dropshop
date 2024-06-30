@@ -5,6 +5,8 @@ import { FaStar, FaRegStar, FaStarHalfAlt } from 'react-icons/fa';
 import { FiShoppingCart } from 'react-icons/fi';
 import { AiFillTag } from 'react-icons/ai';
 import { MdCategory } from 'react-icons/md';
+import Loader from '../components/Loader';
+import NotFound from './NotFound';
 
 type Product = {
   _id: string;
@@ -21,12 +23,14 @@ type Product = {
 
 const ProductDetails: React.FC = () => {
   const [product, setProduct] = useState<Product>();
+  const [error, setError] = useState(false);
   const { id } = useParams<{ id: string }>();
   useEffect(() => {
     const fetchProduct = async () => {
       const response = await fetch(`/api/products/${id}`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
+        setError(true);
       }
       const data = await response.text();
       const json = JSON.parse(data);
@@ -37,7 +41,8 @@ const ProductDetails: React.FC = () => {
   }, [id]);
 
   if (!product) {
-    return <div className="text-center">Product not found...</div>;
+    if (error) return <NotFound />;
+    return <Loader />;
   }
 
   const renderRating = () => {

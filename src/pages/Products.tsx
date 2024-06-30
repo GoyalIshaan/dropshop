@@ -1,36 +1,14 @@
-import { useEffect, useState } from 'react';
-import Product from '../components/ProductCard';
+import { useGetProductsQuery } from '../slices/productsAPISlice';
+import ProductCard from '../components/ProductCard';
+import Loader from '../components/Loader';
+import NotFound from './NotFound';
+import { Product } from '../types';
 
-type Product = {
-  _id: string;
-  name: string;
-  image: string;
-  description: string;
-  brand: string;
-  category: string;
-  price: number;
-  countInStock: number;
-  rating: number;
-  numReviews: number;
-};
+export default function Products() {
+  const { data, error, isLoading } = useGetProductsQuery();
 
-export default function HomePage() {
-  // Use the interface to type your state
-  const [products, setProducts] = useState<Product[]>([]);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const response = await fetch('/api/products');
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.text();
-      const json = JSON.parse(data);
-      setProducts(json);
-    };
-
-    fetchProducts();
-  }, []);
+  if (isLoading) return <Loader />;
+  if (error) return <NotFound />;
 
   return (
     <div className="container mx-auto px-4">
@@ -38,8 +16,8 @@ export default function HomePage() {
         Latest Products
       </h1>
       <div className="flex flex-wrap -mx-2">
-        {products.map(product => (
-          <Product key={product._id} product={product} />
+        {data?.map((product: Product) => (
+          <ProductCard key={product._id} product={product} />
         ))}
       </div>
     </div>

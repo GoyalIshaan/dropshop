@@ -44,5 +44,5 @@ const ordersSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-const order = mongoose.model('Order', ordersSchema);
-export default order;
+const Order = mongoose.model('Order', ordersSchema);
+export default Order;
