@@ -5,7 +5,7 @@ import NotFound from './NotFound';
 import { Product } from '../types';
 
 export default function Products() {
-  const { data, error, isLoading } = useGetProductsQuery();
+  const { data: products, error, isLoading } = useGetProductsQuery();
 
   if (isLoading) return <Loader />;
   if (error) return <NotFound />;
@@ -16,7 +16,7 @@ export default function Products() {
         Latest Products
       </h1>
       <div className="flex flex-wrap -mx-2">
-        {data?.map((product: Product) => (
+        {products?.map((product: Product) => (
           <ProductCard key={product._id} product={product} />
         ))}
       </div>

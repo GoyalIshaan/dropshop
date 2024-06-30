@@ -1,53 +1,31 @@
-import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-
 import { FaStar, FaRegStar, FaStarHalfAlt } from 'react-icons/fa';
 import { FiShoppingCart } from 'react-icons/fi';
 import { AiFillTag } from 'react-icons/ai';
 import { MdCategory } from 'react-icons/md';
 import Loader from '../components/Loader';
 import NotFound from './NotFound';
-
-type Product = {
-  _id: string;
-  name: string;
-  image: string;
-  description: string;
-  brand: string;
-  category: string;
-  price: number;
-  countInStock: number;
-  rating: number;
-  numReviews: number;
-};
+import { useGetProductsDetailsQuery } from '../slices/productsAPISlice';
+import { Product } from '../types';
 
 const ProductDetails: React.FC = () => {
-  const [product, setProduct] = useState<Product>();
-  const [error, setError] = useState(false);
   const { id } = useParams<{ id: string }>();
-  useEffect(() => {
-    const fetchProduct = async () => {
-      const response = await fetch(`/api/products/${id}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-        setError(true);
-      }
-      const data = await response.text();
-      const json = JSON.parse(data);
-      setProduct(json);
-    };
+  const {
+    data: product,
+    error,
+    isLoading,
+  } = useGetProductsDetailsQuery(id) as {
+    data: Product | undefined;
+    error: Error | null;
+    isLoading: boolean;
+  };
 
-    fetchProduct();
-  }, [id]);
+  if (isLoading) return <Loader />;
+  if (error || !product) return <NotFound />;
 
-  if (!product) {
-    if (error) return <NotFound />;
-    return <Loader />;
-  }
-
-  const renderRating = () => {
-    const rating: number = product.rating;
-    const totalStars = [];
+  // Function to render star ratings
+  const renderRating = (rating: number) => {
+    const totalStars: JSX.Element[] = [];
     for (let i = 1; i <= 5; i++) {
       if (i <= rating) {
         totalStars.push(<FaStar key={i} className="text-yellow-500" />);
@@ -89,7 +67,7 @@ const ProductDetails: React.FC = () => {
           )}
         </p>
         <div className="flex items-center text-lg">
-          {renderRating()}
+          {renderRating(product.rating)}
           <span className="ml-2">({product.numReviews} reviews)</span>
         </div>
         {product.countInStock > 0 && (
