@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express'; // Add import statement for Request, Response, and NextFunction
 import asyncHandler from './asyncHandler';
 import User from '../models/userModel';
-import { IUser } from 'types';
+import { IUser } from '../types';
 
 //Protect routes
 export const protect = asyncHandler(

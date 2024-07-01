@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { RootState } from '../store'; // Update the path according to your project structure
+import { RootState } from '../store';
 import CartItem from '../components/CartItem';
 
 const CartPage = () => {
@@ -48,6 +48,12 @@ const CartPage = () => {
           ).toFixed(2)}
         </h4>
       </div>
+      <Link
+        to="/checkout/shipping"
+        className="bg-blue-500 text-white py-2 px-4 rounded mt-4 inline-block"
+      >
+        Checkout
+      </Link>
     </div>
   );
 };

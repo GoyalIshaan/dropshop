@@ -1,12 +1,12 @@
-import { cartState, cartItem } from '../types';
+import { CartState, CartItem } from '../types';
 
 const addDecimals = (num: number) => {
-  return (Math.round(num * 100) / 100).toFixed(2);
+  return Number((Math.round(num * 100) / 100).toFixed(2));
 };
-export const updateCart = (state: cartState) => {
+export const updateCart = (state: CartState) => {
   state.itemsPrice = addDecimals(
     state.items.reduce(
-      (acc: number, item: cartItem) => acc + item.price * item.qty,
+      (acc: number, item: CartItem) => acc + item.price * item.qty,
       0,
     ),
   );

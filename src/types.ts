@@ -16,7 +16,11 @@ declare module 'express' {
     user?: IUser;
   }
   interface Response {
-    cookie(name: string, val: string, options: CookieOptions): this;
+    cookie(
+      name: string,
+      val: string,
+      options: import('./types').CookieOptions,
+    ): this;
   }
 }
 
@@ -42,9 +46,7 @@ export type Product = {
   numReviews: number;
 };
 
-export type CartItem = Product & {
-  qty: number;
-};
+export type CartItem = Product & { qty: number };
 
 export type CartState = {
   items: CartItem[];
@@ -52,4 +54,25 @@ export type CartState = {
   shippingPrice: number;
   taxPrice: number;
   totalPrice: number;
+  shippingAddress: ShippingAddress;
+  paymentMethod: string;
+};
+
+type ShippingAddress = {
+  address: string;
+  city: string;
+  postalCode: string;
+  country: string;
+};
+
+export interface PaymentFormData {
+  paymentMethod: string;
+}
+
+export type OrderItemsElement = {
+  name: string;
+  qty: number;
+  image: string;
+  price: number;
+  product: string;
 };

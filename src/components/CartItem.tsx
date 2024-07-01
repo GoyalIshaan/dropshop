@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
-import { cartItem } from '../types';
+import { CartItem as CartItemProps } from '../types';
 import Quantity from './Quantity';
 import { useState } from 'react';
 import { editQuantity, removeFromCart } from '../slices/cartSlice';
 import { useDispatch } from 'react-redux';
 import { FiTrash, FiTrash2 } from 'react-icons/fi';
 
-const CartItem = ({ item }: { item: cartItem }) => {
+const CartItem = ({ item }: { item: CartItemProps }) => {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(item.qty);
   const [isHovering, setIsHovering] = useState(false);

@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import productRouter from '../routes/productRoute';
 import userRouter from '../routes/userRoutes';
+import orderRouter from '../routes/orderRoutes';
 import cookieParser from 'cookie-parser';
 import { notFound, errorHandler } from '../middleware/errorMiddleware';
 import connectDB from '../db';
@@ -20,12 +21,11 @@ app.use(express.json());
 //middleware to parse url encoded data
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
-});
-
 app.use('/api/products', productRouter);
 app.use('/api/users', userRouter);
+app.use('/api/orders', orderRouter);
+
+//Error Hnadling Middleware
 app.use(notFound);
 app.use(errorHandler);
 

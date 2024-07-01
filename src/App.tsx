@@ -8,6 +8,11 @@ import store from './store';
 import Cart from './pages/Cart';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ShippingPage from './pages/Shipping';
+import PaymentPage from './pages/Payment';
+import PrivateRoute from './components/PrivateRoute';
+import CheckOut from './pages/CheckOut';
+import PlaceOrderPage from './pages/PlaceOrder';
 
 const router = createBrowserRouter([
   {
@@ -15,7 +20,7 @@ const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       {
-        path: '',
+        index: true,
         element: <Products />,
       },
       {
@@ -33,6 +38,28 @@ const router = createBrowserRouter([
       {
         path: 'register',
         element: <Register />,
+      },
+      {
+        path: 'checkout',
+        element: (
+          <PrivateRoute>
+            <CheckOut />
+          </PrivateRoute>
+        ),
+        children: [
+          {
+            path: 'shipping',
+            element: <ShippingPage />,
+          },
+          {
+            path: 'payment',
+            element: <PaymentPage />,
+          },
+          {
+            path: 'placeorder',
+            element: <PlaceOrderPage />,
+          },
+        ],
       },
     ],
   },
