@@ -6,6 +6,8 @@ import NotFound from './pages/NotFound';
 import { Provider } from 'react-redux';
 import store from './store';
 import Cart from './pages/Cart';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 const router = createBrowserRouter([
   {
@@ -13,7 +15,7 @@ const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       {
-        index: true,
+        path: '',
         element: <Products />,
       },
       {
@@ -23,6 +25,14 @@ const router = createBrowserRouter([
       {
         path: 'cart',
         element: <Cart />,
+      },
+      {
+        path: 'login',
+        element: <Login />,
+      },
+      {
+        path: 'register',
+        element: <Register />,
       },
     ],
   },

@@ -1,10 +1,10 @@
-import generateToken from 'utils/generateToken';
+import generateToken from '../utils/generateToken';
 import asyncHandler from '../middleware/asyncHandler';
 import User from '../models/userModel';
 import { Request, Response } from 'express';
 
 // @desc    Auth user and get the token
-// @route   POST /api/users
+// @route   POST /api/users/auth
 // @access  Public
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body as { email: string; password: string };
@@ -30,6 +30,7 @@ const authUser = asyncHandler(async (req, res) => {
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
+  console.log(req.body);
   const userExists = await User.findOne({ email });
   if (userExists) {
     res.status(400);
@@ -67,7 +68,6 @@ const logoutUser = asyncHandler(async (req, res) => {
 // @desc    Get user profile
 // @route   GET /api/users/profile
 // @access  Private
-
 const getUserProfile = asyncHandler(async (req: Request, res: Response) => {
   const user = await User.findById(req.user?._id);
   if (user) {

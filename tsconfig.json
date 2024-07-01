@@ -1,28 +1,11 @@
 {
-  "compilerOptions": {
-    "target": "es2018", // Set according to your Node.js version compatibility
-    "lib": ["esnext", "dom"], // Library files to be included
-    "allowJs": true, // Allow JavaScript files to be compiled
-    "outDir": "./dist", // Set the output directory for compiled files
-    "rootDir": "./src", // Set the root directory that contains all source files
-    "strict": true, // Enable all strict type-checking options
-    "esModuleInterop": true, // Enables ES6-style module import interop with default exports
-    "skipLibCheck": true, // Skip type checking of all declaration files (*.d.ts)
-    "forceConsistentCasingInFileNames": true, // Disallow inconsistently-cased references to the same file
-    "resolveJsonModule": true, // Allow importing of '.json' files
-    "moduleResolution": "node", // Work like Node.js for resolving modules
-    "types": ["node"], // Include Node.js type definitions
-    "baseUrl": ".", // Base directory to resolve non-relative module names
-    "paths": {
-      "*": ["src/*", "node_modules/*"], // Add paths for module resolution
-      "types": ["src/types"] // Specific path to your types folder
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
     }
-  },
-  "include": [
-    "src/**/*" // Include all files in the src directory
-  ],
-  "exclude": [
-    "node_modules", // Exclude the node_modules directory
-    "**/*.spec.ts" // Exclude test files
   ]
 }

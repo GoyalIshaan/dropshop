@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { cartItem, cartState } from '../types';
+import { CartItem, CartState } from '../types';
 import { updateCart } from '../utils/cartUtils';
 
-const initialState: cartState = localStorage.getItem('cart')
+const initialState: CartState = localStorage.getItem('cart')
   ? JSON.parse(localStorage.getItem('cart') as string)
   : {
       items: [],
@@ -17,8 +17,8 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      const newItem: cartItem = action.payload;
-      const existingItem: cartItem | undefined = state.items.find(
+      const newItem: CartItem = action.payload;
+      const existingItem: CartItem | undefined = state.items.find(
         item => item._id === newItem._id,
       );
       if (existingItem) {
@@ -33,7 +33,7 @@ const cartSlice = createSlice({
       updateCart(state);
     },
     editQuantity: (state, action) => {
-      const { _id, qty } = action.payload as cartItem;
+      const { _id, qty } = action.payload as CartItem;
       const item = state.items.find(item => item._id === _id);
       if (item) {
         item.qty = qty;
@@ -41,7 +41,7 @@ const cartSlice = createSlice({
       updateCart(state);
     },
     removeFromCart: (state, action) => {
-      const { _id } = action.payload as cartItem;
+      const { _id } = action.payload as CartItem;
       state.items = state.items.filter(item => item._id !== _id);
       updateCart(state);
     },

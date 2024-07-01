@@ -1,16 +1,7 @@
 import 'express';
 import { Document } from 'mongoose';
 
-declare module 'express' {
-  interface Request {
-    user?: IUser;
-  }
-  interface Response {
-    cookie(name: string, val: string, options: CookieOptions): this;
-  }
-}
-
-interface CookieOptions {
+export interface CookieOptions {
   httpOnly: boolean;
   secure: boolean;
   sameSite: 'strict' | 'lax' | 'none';
@@ -18,6 +9,15 @@ interface CookieOptions {
   expires?: Date;
   path?: string;
   domain?: string;
+}
+
+declare module 'express' {
+  interface Request {
+    user?: IUser;
+  }
+  interface Response {
+    cookie(name: string, val: string, options: CookieOptions): this;
+  }
 }
 
 export interface IUser extends Document {

@@ -15,7 +15,6 @@ export const protect = asyncHandler(
           process.env.JWT_SECRET!,
         ) as jwt.JwtPayload;
 
-        // Correctly handling potential null
         req.user = (await User.findById(decoded.userId).select(
           '-password',
         )) as IUser;
