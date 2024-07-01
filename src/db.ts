@@ -12,6 +12,7 @@ const connectDB = async () => {
     } else {
       console.error(`An unexpected error occurred`);
     }
+    // exiting and killing the process
     process.exit(1);
   }
 };

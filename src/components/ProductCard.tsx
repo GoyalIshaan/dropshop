@@ -1,6 +1,6 @@
 import React from 'react';
-import { FaStar, FaRegStar, FaStarHalfAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import Rating from './Rating';
 
 type ProductProps = {
   product: {
@@ -21,20 +21,6 @@ const Product: React.FC<ProductProps> = ({ product }) => {
   const navigate = useNavigate();
   const handleProductClick = () => {
     navigate(`/products/${product._id}`);
-  };
-
-  const renderStars = (rating: number) => {
-    const totalStars = [];
-    for (let i = 1; i <= 5; i++) {
-      if (i <= rating) {
-        totalStars.push(<FaStar key={i} className="text-yellow-500" />);
-      } else if (i === Math.ceil(rating) && !Number.isInteger(rating)) {
-        totalStars.push(<FaStarHalfAlt key={i} className="text-yellow-500" />);
-      } else {
-        totalStars.push(<FaRegStar key={i} className="text-yellow-500" />);
-      }
-    }
-    return totalStars;
   };
 
   return (
@@ -64,7 +50,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
               : 'Out of Stock'}
           </p>
           <div className="flex justify-start items-center mb-1">
-            {renderStars(product.rating)}
+            <Rating rating={product.rating} />
             <span className="ml-2 text-sm">({product.numReviews} reviews)</span>
           </div>
         </div>

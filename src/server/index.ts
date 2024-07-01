@@ -1,8 +1,10 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import productRouter from '../routes/productRoute.ts';
-import { notFound, errorHandler } from '../middleware/errorMiddleware.ts';
-import connectDB from '../db.ts';
+import productRouter from '../routes/productRoute';
+import userRouter from '../routes/userRoutes';
+import cookieParser from 'cookie-parser';
+import { notFound, errorHandler } from '../middleware/errorMiddleware';
+import connectDB from '../db';
 
 dotenv.config();
 connectDB();
@@ -10,11 +12,20 @@ connectDB();
 const app = express();
 const port = process.env.PORT;
 
+//middleware to parse cookies
+app.use(cookieParser());
+
+//middleware to parse json data
+app.use(express.json());
+//middleware to parse url encoded data
+app.use(express.urlencoded({ extended: true }));
+
 app.get('/', (req, res) => {
   res.send('Hello, World!');
 });
 
 app.use('/api/products', productRouter);
+app.use('/api/users', userRouter);
 app.use(notFound);
 app.use(errorHandler);
 
