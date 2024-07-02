@@ -18,6 +18,10 @@ export const ordersAPISlice = apiSlice.injectEndpoints({
         method: 'GET',
       }),
       keepUnusedDataFor: 5,
+      onCacheEntryAdded: async (arg, { cacheDataLoaded }) => {
+        const { data } = await cacheDataLoaded;
+        console.log('Order data from API:', data);
+      },
     }),
     payOrder: builder.mutation<
       OrderItemsElement,
@@ -35,6 +39,10 @@ export const ordersAPISlice = apiSlice.injectEndpoints({
         method: 'GET',
       }),
       keepUnusedDataFor: 5,
+      onCacheEntryAdded: async (arg, { cacheDataLoaded }) => {
+        const { data } = await cacheDataLoaded;
+        console.log('PayPal client ID from API:', data);
+      },
     }),
   }),
 });

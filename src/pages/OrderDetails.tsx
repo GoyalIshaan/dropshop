@@ -40,9 +40,9 @@ const OrderDetails: React.FC = () => {
 
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
-  // Function to load the PayPal script with the client ID and set the currency
   const loadPayPalScript = () => {
     if (paypal?.clientId) {
+      console.log('Loading PayPal script with client ID:', paypal.clientId);
       paypalDispatch({
         type: DISPATCH_ACTION.RESET_OPTIONS,
         value: {
@@ -67,8 +67,8 @@ const OrderDetails: React.FC = () => {
     }
   }, [order]);
 
-  // Function to create an order with PayPal
   function createOrder(_data: any, actions: any): Promise<string> {
+    console.log('Creating PayPal order with data:', order);
     if (order && actions.order) {
       return actions.order
         .create({
@@ -80,7 +80,10 @@ const OrderDetails: React.FC = () => {
             },
           ],
         })
-        .then((orderId: string) => orderId)
+        .then((orderId: string) => {
+          console.log('PayPal order created with ID:', orderId);
+          return orderId;
+        })
         .catch((error: any) => {
           console.error('Order creation failed:', error);
           throw new Error('Order creation failed');
@@ -89,11 +92,12 @@ const OrderDetails: React.FC = () => {
     return Promise.reject(new Error('Order creation failed'));
   }
 
-  // Function called when the PayPal payment is approved
-  async function onApprove(actions: any): Promise<void> {
+  async function onApprove(data: any, actions: any): Promise<void> {
+    console.log('PayPal payment approved with actions:', actions);
     if (actions.order) {
       try {
         const details = (await actions.order.capture()) as OrderState;
+        console.log('Order captured:', details);
         if (id) {
           await payOrder({ orderId: id, details }).unwrap();
           await refetch();
@@ -106,7 +110,6 @@ const OrderDetails: React.FC = () => {
     }
   }
 
-  // Function called when there is an error with the PayPal payment
   function onError(err: Record<string, unknown>): void {
     console.error('PayPal onError:', err);
     toast.error((err.message as string) || 'An error occurred');

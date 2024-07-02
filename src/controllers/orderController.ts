@@ -86,7 +86,10 @@ const getOrderByID = asyncHandler(async (req: Request, res: Response) => {
 // @desc    Update Order to Paid
 // @route   PUT /api/orders/:id/pay
 // @access  Private
+// Update Order to Paid
+// Update Order to Paid
 const updateOrderToPaid = asyncHandler(async (req, res) => {
+  console.log('Update Order to Paid request body:', req.body);
   const order = await Order.findById(req.params.id).populate(
     'user',
     'name email',
@@ -101,6 +104,7 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
       email_address: req.body.payer.email_address,
     };
     const updatedOrder = await order.save();
+    console.log('Order updated to paid:', updatedOrder);
     res.status(200).json(updatedOrder);
   } else {
     res.status(404);

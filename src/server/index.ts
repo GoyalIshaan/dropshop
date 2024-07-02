@@ -25,9 +25,9 @@ app.use('/api/products', productRouter);
 app.use('/api/users', userRouter);
 app.use('/api/orders', orderRouter);
 
-//middleware to get paypal client id
+//endpoint to get paypal client id
 app.get('/api/config/paypal', (req, res) =>
-  res.send({ clientId: process.env.PAYPAL_CLIENT_ID }),
+  res.json({ clientId: process.env.PAYPAL_CLIENT_ID }),
 );
 
 //Error Hnadling Middleware
