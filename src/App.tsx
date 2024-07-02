@@ -16,6 +16,7 @@ import CheckOut from './pages/CheckOut';
 import PlaceOrderPage from './pages/PlaceOrder';
 import OrderDetails from './pages/OrderDetails';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+import Profile from './pages/Profile';
 
 export default function App() {
   const [paypalClientId, setPaypalClientId] = useState('');
@@ -65,6 +66,14 @@ export default function App() {
               ),
             },
           ],
+        },
+        {
+          path: 'profile',
+          element: (
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          ),
         },
       ],
     },
