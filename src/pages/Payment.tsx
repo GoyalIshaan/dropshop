@@ -6,6 +6,7 @@ import { RootState } from '../store';
 import { savePaymentMethod } from '../slices/cartSlice';
 import PaymentMethod from '../components/PaymentMethod';
 import { PaymentFormData } from '../types';
+import CheckOutButtons from '../components/CheckOutButtons';
 
 const PaymentPage: React.FC = () => {
   const dispatch = useDispatch();
@@ -18,8 +19,6 @@ const PaymentPage: React.FC = () => {
     'CreditCard',
     'DebitCard',
   ];
-  const buttonStlying: string =
-    'flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-200 ease-in-out transform hover:scale-105';
 
   const { handleSubmit, control } = useForm<PaymentFormData>({
     defaultValues: {
@@ -27,8 +26,10 @@ const PaymentPage: React.FC = () => {
     },
   });
 
-  const onSubmit = (data: PaymentFormData) => {
-    dispatch(savePaymentMethod(data.paymentMethod));
+  const onSubmit = (data?: PaymentFormData) => {
+    if (data) {
+      dispatch(savePaymentMethod(data.paymentMethod));
+    }
     navigate('/checkout/placeorder');
   };
 
@@ -53,27 +54,11 @@ const PaymentPage: React.FC = () => {
             ))}
           </div>
         </div>
-        <div className="flex justify-between pt-4 space-x-4">
-          <button
-            type="button"
-            onClick={handleBack}
-            className={
-              `w-1/5  bg-gray-600 hover:bg-gray-700 focus:ring-gray-500 ` +
-              buttonStlying
-            }
-          >
-            Back
-          </button>
-          <button
-            type="submit"
-            className={
-              `flex-grow bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500` +
-              buttonStlying
-            }
-          >
-            Continue
-          </button>
-        </div>
+        <CheckOutButtons
+          handleBack={handleBack}
+          onSubmit={handleSubmit(onSubmit)}
+          text="Continue"
+        />
       </form>
     </div>
   );

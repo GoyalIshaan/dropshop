@@ -68,6 +68,12 @@ type ShippingAddress = {
 export interface PaymentFormData {
   paymentMethod: string;
 }
+export interface ShippingFormData {
+  address: string;
+  city: string;
+  postalCode: string;
+  country: string;
+}
 
 export type OrderItemsElement = {
   name: string;
@@ -75,4 +81,27 @@ export type OrderItemsElement = {
   image: string;
   price: number;
   product: string;
+};
+
+export type OrderState = {
+  orderItems: OrderItemsElement[];
+  user: IUser;
+  shippingAddress: ShippingAddress;
+  paymentMethod: string;
+  itemsPrice: number;
+  shippingPrice: number;
+  paymentResult: PaymentResult | undefined;
+  taxPrice: number;
+  totalPrice: number;
+  isPaid: boolean;
+  paidAt?: Date;
+  isDelivered: boolean;
+  deliveredAt?: Date;
+};
+
+export type PaymentResult = {
+  id: string;
+  status: string;
+  update_time: string;
+  email_address: string;
 };

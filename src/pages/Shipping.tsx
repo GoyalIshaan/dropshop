@@ -1,23 +1,17 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Control } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
+import { saveShippingAddress } from '../slices/cartSlice';
+import { CartState, ShippingFormData } from '../types';
+import ShippingInputField from '../components/ShippingInputField';
 import {
   FaMapMarkerAlt,
   FaCity,
   FaGlobeAmericas,
   FaMailBulk,
 } from 'react-icons/fa';
-import { saveShippingAddress } from '../slices/cartSlice';
-import { CartState } from '../types';
-
-interface ShippingFormData {
-  address: string;
-  city: string;
-  postalCode: string;
-  country: string;
-}
 
 const ShippingPage: React.FC = () => {
   const navigate = useNavigate();
@@ -25,11 +19,7 @@ const ShippingPage: React.FC = () => {
   const cart: CartState = useSelector((state: RootState) => state.cart);
   const { shippingAddress } = cart;
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ShippingFormData>({
+  const { control, handleSubmit } = useForm<ShippingFormData>({
     defaultValues: {
       address: shippingAddress?.address || '',
       city: shippingAddress?.city || '',
@@ -47,143 +37,58 @@ const ShippingPage: React.FC = () => {
     navigate('/cart');
   };
 
+  const buttonStyling: string =
+    'flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-200 ease-in-out transform hover:scale-105';
+
   return (
     <div className="container mx-auto px-4 pb-12 max-w-md">
       <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">
         Shipping Address
       </h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <div className="space-y-2">
-          <label
-            htmlFor="address"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Address
-          </label>
-          <div className="relative rounded-md shadow-sm">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FaMapMarkerAlt className="text-gray-400" />
-            </div>
-            <input
-              {...register('address', { required: 'Address is required' })}
-              type="text"
-              className={`block w-full pl-10 pr-3 py-2 sm:text-sm border-gray-300 rounded-md 
-                transition-all duration-200 ease-in-out
-                focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500
-                hover:border-indigo-300
-                ${errors.address ? 'border-red-300' : ''}`}
-              placeholder="Enter your address"
-            />
-            {errors.address && (
-              <p className="text-red-500 text-sm">{errors.address.message}</p>
-            )}
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <label
-            htmlFor="country"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Country
-          </label>
-          <div className="relative rounded-md shadow-sm">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FaGlobeAmericas className="text-gray-400" />
-            </div>
-            <input
-              {...register('country', { required: 'Country is required' })}
-              type="text"
-              className={`block w-full pl-10 pr-3 py-2 sm:text-sm border-gray-300 rounded-md 
-                transition-all duration-200 ease-in-out
-                focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500
-                hover:border-indigo-300
-                ${errors.country ? 'border-red-300' : ''}`}
-              placeholder="Enter your country"
-            />
-            {errors.country && (
-              <p className="text-red-500 text-sm">{errors.country.message}</p>
-            )}
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <label
-            htmlFor="city"
-            className="block text-sm font-medium text-gray-700"
-          >
-            City
-          </label>
-          <div className="relative rounded-md shadow-sm">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FaCity className="text-gray-400" />
-            </div>
-            <input
-              {...register('city', { required: 'City is required' })}
-              type="text"
-              className={`block w-full pl-10 pr-3 py-2 sm:text-sm border-gray-300 rounded-md 
-                transition-all duration-200 ease-in-out
-                focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500
-                hover:border-indigo-300
-                ${errors.city ? 'border-red-300' : ''}`}
-              placeholder="Enter your city"
-            />
-            {errors.city && (
-              <p className="text-red-500 text-sm">{errors.city.message}</p>
-            )}
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <label
-            htmlFor="postalCode"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Postal Code
-          </label>
-          <div className="relative rounded-md shadow-sm">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FaMailBulk className="text-gray-400" />
-            </div>
-            <input
-              {...register('postalCode', {
-                required: 'Postal Code is required',
-              })}
-              type="text"
-              className={`block w-full pl-10 pr-3 py-2 sm:text-sm border-gray-300 rounded-md 
-                transition-all duration-200 ease-in-out
-                focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500
-                hover:border-indigo-300
-                ${errors.postalCode ? 'border-red-300' : ''}`}
-              placeholder="Enter your postal code"
-            />
-            {errors.postalCode && (
-              <p className="text-red-500 text-sm">
-                {errors.postalCode.message}
-              </p>
-            )}
-          </div>
-        </div>
-
+        <ShippingInputField
+          name="address"
+          control={control as Control<ShippingFormData>}
+          label="Address"
+          placeholder="Enter your address"
+          icon={<FaMapMarkerAlt className="text-gray-400" />}
+          requiredMessage="Address is required"
+        />
+        <ShippingInputField
+          name="country"
+          control={control as Control<ShippingFormData>}
+          label="Country"
+          placeholder="Enter your country"
+          icon={<FaGlobeAmericas className="text-gray-400" />}
+          requiredMessage="Country is required"
+        />
+        <ShippingInputField
+          name="city"
+          control={control as Control<ShippingFormData>}
+          label="City"
+          placeholder="Enter your city"
+          icon={<FaCity className="text-gray-400" />}
+          requiredMessage="City is required"
+        />
+        <ShippingInputField
+          name="postalCode"
+          control={control as Control<ShippingFormData>}
+          label="Postal Code"
+          placeholder="Enter your postal code"
+          icon={<FaMailBulk className="text-gray-400" />}
+          requiredMessage="Postal Code is required"
+        />
         <div className="flex justify-between pt-4 space-x-4">
           <button
             type="button"
             onClick={handleBack}
-            className="w-1/5 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-600 
-              hover:bg-gray-700 
-              focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500
-              transition-all duration-200 ease-in-out
-              transform hover:scale-105"
+            className={`w-1/5 bg-gray-600 hover:bg-gray-700 focus:ring-gray-500 ${buttonStyling}`}
           >
             Back
           </button>
           <button
             type="submit"
-            className="flex-grow flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 
-              hover:bg-indigo-700 
-              focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
-              transition-all duration-200 ease-in-out
-              transform hover:scale-105"
+            className={`flex-grow bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 ${buttonStyling}`}
           >
             Continue
           </button>

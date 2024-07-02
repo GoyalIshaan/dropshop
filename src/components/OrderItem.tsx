@@ -1,11 +1,18 @@
-import { CartItem } from '../types';
+import React from 'react';
+import { CartItem, OrderItemsElement } from '../types';
 
-const OrderItem = ({ item }: { item: CartItem }) => {
+type OrderItemProps = {
+  item: CartItem | OrderItemsElement;
+};
+
+const OrderItem: React.FC<OrderItemProps> = ({ item }) => {
+  const imagePath = 'image' in item ? item.image : ''; // Adjust the image path if needed
+
   return (
-    <li key={item._id} className="mb-2 flex justify-between items-center">
+    <li key={item.name} className="mb-2 flex justify-between items-center">
       <div className="flex items-center">
         <img
-          src={`../../${item.image}`}
+          src={`../../${imagePath}`}
           alt={item.name}
           className="w-20 h-20 rounded mr-4 mb-4"
         />
