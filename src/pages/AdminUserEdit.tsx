@@ -7,12 +7,17 @@ import {
 import Loader from '../components/Loader';
 import { toast } from 'react-toastify';
 import { FaTimesCircle } from 'react-icons/fa';
-import Input from '../components/AdminUserEditInput'; // Ensure this is the reusable Input component
-import { IUser } from '../types';
+import Input from '../components/AdminUserEditInput';
 
 interface UserEditProps {
   userId: string;
   onClose: () => void;
+}
+
+interface UserFormData {
+  name: string;
+  email: string;
+  isAdmin: boolean;
 }
 
 const UserEdit: React.FC<UserEditProps> = ({ userId, onClose }) => {
@@ -24,7 +29,7 @@ const UserEdit: React.FC<UserEditProps> = ({ userId, onClose }) => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<IUser>({
+  } = useForm<UserFormData>({
     defaultValues: {
       name: '',
       email: '',
@@ -34,11 +39,15 @@ const UserEdit: React.FC<UserEditProps> = ({ userId, onClose }) => {
 
   useEffect(() => {
     if (user) {
-      reset(user);
+      reset({
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+      });
     }
   }, [user, reset]);
 
-  const onSubmit = async (data: Partial<IUser>) => {
+  const onSubmit = async (data: UserFormData) => {
     try {
       await updateUser({ id: userId, data }).unwrap();
       toast.success('User updated successfully');
@@ -106,7 +115,6 @@ const UserEdit: React.FC<UserEditProps> = ({ userId, onClose }) => {
               id="isAdmin"
               type="checkbox"
               {...register('isAdmin')}
-              defaultValue={user?.isAdmin}
               className="block p-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200"
             />
           </div>

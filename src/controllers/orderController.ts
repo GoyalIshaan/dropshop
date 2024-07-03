@@ -1,7 +1,7 @@
 import asyncHandler from '../middleware/asyncHandler';
-import Order from '../models/orderModel.ts';
+import Order from '../models/orderModel';
 import { Request, Response } from 'express';
-import { OrderItemsElement } from '../types.ts';
+import { OrderItemsElement } from '../types';
 
 // @desc    Create New Order
 // @route   POST /api/orders
