@@ -1,12 +1,13 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { setCredentials } from '../slices/authSlice';
+import { useGetMyOrdersQuery } from '../slices/ordersAPISlice';
 import { useProfileMutation } from '../slices/userAPISlice';
 import { RootState } from '../store';
-import { toast } from 'react-toastify';
-import { IUser } from '../types';
-import { useDispatch } from 'react-redux';
-import { setCredentials } from '../slices/authSlice';
+import { IUser, OrderItemsElement } from '../types';
 
 const ProfileUpdate: React.FC = () => {
   const { userInfo } = useSelector((state: RootState) => state.auth);
@@ -22,6 +23,8 @@ const ProfileUpdate: React.FC = () => {
   });
 
   const [updateProfile, { isLoading }] = useProfileMutation();
+  const { data: orders, isLoading: isLoadingOrders } = useGetMyOrdersQuery();
+
   const dispatch = useDispatch();
 
   const onSubmit = async (data: IUser) => {
@@ -89,7 +92,28 @@ const ProfileUpdate: React.FC = () => {
           Order History
         </h2>
         <div className="space-y-4">
-          {/* Placeholder for Order history items */}
+          {isLoadingOrders ? (
+            <p>Loading...</p>
+          ) : (
+            <div className="space-y-4">
+              {orders?.map((order: OrderItemsElement) => (
+                <div key={order._id} className="bg-gray-100 p-4 rounded-lg">
+                  <Link to={`/order/${order._id}`}>
+                    <h3 className="text-lg font-semibold">
+                      Order ID: {order._id}
+                    </h3>
+                    <p className="text-sm">Total: ${order.totalPrice}</p>
+                    <p className="text-sm">
+                      Paid: {order.isPaid ? 'Yes' : 'No'}
+                    </p>
+                    <p className="text-sm">
+                      Delivered: {order.isDelivered ? 'Yes' : 'No'}
+                    </p>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -65,6 +65,32 @@ export default function Header() {
                     <RiProfileLine className="inline mr-2" />
                     Profile
                   </Link>
+
+                  {userInfo.isAdmin && (
+                    <>
+                      <Link
+                        to="/productlist"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <RiProfileLine className="inline mr-2" />
+                        Product List
+                      </Link>
+                      <Link
+                        to="/userlist"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <RiProfileLine className="inline mr-2" />
+                        User List
+                      </Link>
+                      <Link
+                        to="/orderlist"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <RiProfileLine className="inline mr-2" />
+                        Orderlist
+                      </Link>
+                    </>
+                  )}
                   <button
                     onClick={handleLogout}
                     className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"

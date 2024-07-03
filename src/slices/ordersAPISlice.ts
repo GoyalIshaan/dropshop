@@ -18,15 +18,8 @@ export const ordersAPISlice = apiSlice.injectEndpoints({
         method: 'GET',
       }),
       keepUnusedDataFor: 5,
-      onCacheEntryAdded: async (arg, { cacheDataLoaded }) => {
-        const { data } = await cacheDataLoaded;
-        console.log('Order data from API:', data);
-      },
     }),
-    payOrder: builder.mutation<
-      OrderItemsElement,
-      { orderId: string; details: OrderState }
-    >({
+    payOrder: builder.mutation<void, { orderId: string; details: OrderState }>({
       query: args => ({
         url: `${ORDERS_URL}/${args.orderId}/pay`,
         method: 'PUT',
@@ -39,10 +32,26 @@ export const ordersAPISlice = apiSlice.injectEndpoints({
         method: 'GET',
       }),
       keepUnusedDataFor: 5,
-      onCacheEntryAdded: async (arg, { cacheDataLoaded }) => {
-        const { data } = await cacheDataLoaded;
-        console.log('PayPal client ID from API:', data);
-      },
+    }),
+    getMyOrders: builder.query<OrderItemsElement[], void>({
+      query: () => ({
+        url: `${ORDERS_URL}/mine`,
+        method: 'GET',
+      }),
+      keepUnusedDataFor: 5,
+    }),
+    getOrders: builder.query<OrderItemsElement[], void>({
+      query: () => ({
+        url: ORDERS_URL,
+        method: 'GET',
+      }),
+      keepUnusedDataFor: 5,
+    }),
+    deliverOrder: builder.mutation<void, string>({
+      query: orderId => ({
+        url: `${ORDERS_URL}/${orderId}/deliver`,
+        method: 'PUT',
+      }),
     }),
   }),
 });
@@ -52,4 +61,7 @@ export const {
   useGetOrderByIDQuery,
   usePayOrderMutation,
   useGetPayPalClientIdQuery,
+  useGetMyOrdersQuery,
+  useGetOrdersQuery,
+  useDeliverOrderMutation,
 }: any = ordersAPISlice;

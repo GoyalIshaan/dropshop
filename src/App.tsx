@@ -17,6 +17,10 @@ import PlaceOrderPage from './pages/PlaceOrder';
 import OrderDetails from './pages/OrderDetails';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import Profile from './pages/Profile';
+import AdminRoute from './components/AdminRoute';
+import OrderList from './pages/AdminOrderList';
+import ProductList from './pages/AdminProductsList';
+import UserList from './pages/AdminUserList';
 
 export default function App() {
   const [paypalClientId, setPaypalClientId] = useState('');
@@ -73,6 +77,30 @@ export default function App() {
             <PrivateRoute>
               <Profile />
             </PrivateRoute>
+          ),
+        },
+        {
+          path: 'orderlist',
+          element: (
+            <AdminRoute>
+              <OrderList />
+            </AdminRoute>
+          ),
+        },
+        {
+          path: 'productlist',
+          element: (
+            <AdminRoute>
+              <ProductList />
+            </AdminRoute>
+          ),
+        },
+        {
+          path: 'userlist',
+          element: (
+            <AdminRoute>
+              <UserList />
+            </AdminRoute>
           ),
         },
       ],

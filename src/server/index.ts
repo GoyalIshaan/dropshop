@@ -1,8 +1,10 @@
+import path from 'path';
 import express from 'express';
 import dotenv from 'dotenv';
 import productRouter from '../routes/productRoute';
 import userRouter from '../routes/userRoutes';
 import orderRouter from '../routes/orderRoutes';
+import uploadRouter from '../routes/uploadRoutes';
 import cookieParser from 'cookie-parser';
 import { notFound, errorHandler } from '../middleware/errorMiddleware';
 import connectDB from '../db';
@@ -24,11 +26,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/products', productRouter);
 app.use('/api/users', userRouter);
 app.use('/api/orders', orderRouter);
+app.use('/api/upload', uploadRouter);
 
 //endpoint to get paypal client id
 app.get('/api/config/paypal', (req, res) =>
   res.json({ clientId: process.env.PAYPAL_CLIENT_ID }),
 );
+
+//making the uploads folder static
+const __dirname = path.resolve();
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 //Error Hnadling Middleware
 app.use(notFound);

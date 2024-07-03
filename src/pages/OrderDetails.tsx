@@ -5,6 +5,7 @@ import {
   useGetOrderByIDQuery,
   usePayOrderMutation,
   useGetPayPalClientIdQuery,
+  useDeliverOrderMutation,
 } from '../slices/ordersAPISlice';
 import {
   FaShippingFast,
@@ -24,9 +25,12 @@ import {
   DISPATCH_ACTION,
 } from '@paypal/react-paypal-js';
 import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 
 const OrderDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const userInfo = useSelector((state: RootState) => state.auth.userInfo);
   const {
     data: order,
     isLoading,
@@ -37,6 +41,9 @@ const OrderDetails: React.FC = () => {
   const { data: paypal } = useGetPayPalClientIdQuery();
 
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
+
+  const [deliverOrder, { isLoading: loadingDeliver }] =
+    useDeliverOrderMutation();
 
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
@@ -115,6 +122,14 @@ const OrderDetails: React.FC = () => {
     toast.error((err.message as string) || 'An error occurred');
   }
 
+  const deliverOrderHandler = async () => {
+    if (id) {
+      await deliverOrder(id).unwrap();
+      await refetch();
+      toast.success('Order delivered successfully');
+    }
+  };
+
   if (isLoading) {
     return <Loader />;
   }
@@ -149,6 +164,8 @@ const OrderDetails: React.FC = () => {
     totalPrice,
   } = order as OrderState;
 
+  console.log(user);
+
   return (
     <div className="container mx-auto px-4 pt-12 max-w-4xl">
       <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">
@@ -169,6 +186,17 @@ const OrderDetails: React.FC = () => {
           ]}
           status={{ label: 'Status', value: isDelivered }}
         />
+        {userInfo && userInfo.isAdmin && isPaid && !isDelivered && (
+          <button
+            onClick={deliverOrderHandler}
+            className={`px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${
+              loadingDeliver ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+            disabled={loadingDeliver}
+          >
+            {loadingDeliver ? 'Delivering...' : 'Mark as Delivered'}
+          </button>
+        )}
 
         <DetailsSection
           title="Payment Details"

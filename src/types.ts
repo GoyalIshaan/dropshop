@@ -99,6 +99,10 @@ export type OrderState = {
   deliveredAt?: Date;
 };
 
+export type FinalOrderState = OrderState & {
+  _id: string;
+};
+
 export type PaymentResult = {
   id: string;
   status: string;
