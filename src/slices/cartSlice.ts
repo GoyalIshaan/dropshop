@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { CartItem, CartState } from '../types';
+import { WritableDraft } from 'immer';
+import { CartItem, CartState, Review } from '../types';
 import { updateCart } from '../utils/cartUtils';
 
 const initialState: CartState = localStorage.getItem('cart')
@@ -30,6 +31,7 @@ const cartSlice = createSlice({
         state.items.push({
           ...newItem,
           qty: newItem.qty,
+          reviews: newItem.reviews as WritableDraft<Review>[],
         });
       }
       updateCart(state);

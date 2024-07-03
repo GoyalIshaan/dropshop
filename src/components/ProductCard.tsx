@@ -30,7 +30,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
     >
       <div className="bg-gray-100 rounded shadow-lg p-4 h-full cursor-pointer transition duration-300 hover:shadow-xl">
         <img
-          src={`../../${product.image}`}
+          src={product.image}
           alt={product.name}
           className="w-full h-[250px] object-cover rounded-t"
         />

@@ -13,44 +13,45 @@ dotenv.config();
 connectDB();
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 8000;
 
-//middleware to parse cookies
+// Middleware to parse cookies
 app.use(cookieParser());
 
-//middleware to parse json data
+// Middleware to parse JSON data
 app.use(express.json());
-//middleware to parse url encoded data
+// Middleware to parse URL encoded data
 app.use(express.urlencoded({ extended: true }));
 
+// API Routes
 app.use('/api/products', productRouter);
 app.use('/api/users', userRouter);
 app.use('/api/orders', orderRouter);
 app.use('/api/upload', uploadRouter);
 
-//endpoint to get paypal client id
-app.get('/api/config/paypal', (req, res) =>
+// Endpoint to get PayPal client ID
+app.get('/api/config/paypal', (_req, res) =>
   res.json({ clientId: process.env.PAYPAL_CLIENT_ID }),
 );
 
-//making the uploads folder static
+// Making the uploads folder static
 const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
-//building rules
+// Serving static files in production
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '/dist')));
+  app.use(express.static(path.join(__dirname, 'dist')));
 
-  app.get('*', (req, res) =>
+  app.get('*', (_req, res) =>
     res.sendFile(path.resolve(__dirname, 'dist', 'index.html')),
   );
 }
 
-//Error Hnadling Middleware
+// Error handling middleware
 app.use(notFound);
 app.use(errorHandler);
 
-//starts the server on the specified port
+// Start the server on the specified port
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

@@ -38,7 +38,7 @@ const ProductDetails: React.FC = () => {
       </Helmet>
       <div className="flex flex-col md:flex-row gap-8">
         <img
-          src={`../../${product.image}`}
+          src={product.image}
           alt={product.name}
           className="md:w-1/2 rounded-lg shadow-lg"
         />

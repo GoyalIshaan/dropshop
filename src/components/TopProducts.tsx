@@ -54,7 +54,7 @@ const TopProductsCarousel = () => {
               <div className="w-full lg:w-1/2">
                 <div className="aspect-w-1 aspect-h-1">
                   <img
-                    src={`../../${product.image}`}
+                    src={product.image}
                     alt={product.name}
                     className="w-full h-full object-cover"
                   />
