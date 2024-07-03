@@ -23,7 +23,6 @@ app.use(express.json());
 // Middleware to parse URL encoded data
 app.use(express.urlencoded({ extended: true }));
 
-// API Routes
 app.use('/api/products', productRouter);
 app.use('/api/users', userRouter);
 app.use('/api/orders', orderRouter);
@@ -38,20 +37,20 @@ app.get('/api/config/paypal', (_req, res) =>
 const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
-// Serving static files in production
+// Building rules
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'dist')));
+  app.use(express.static(path.join(__dirname, '/dist')));
 
   app.get('*', (_req, res) =>
     res.sendFile(path.resolve(__dirname, 'dist', 'index.html')),
   );
 }
 
-// Error handling middleware
+// Error Handling Middleware
 app.use(notFound);
 app.use(errorHandler);
 
-// Start the server on the specified port
+// Starts the server on the specified port
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
