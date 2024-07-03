@@ -11,7 +11,7 @@ const Rating = ({ rating }: { rating: number }) => {
       totalStars.push(<FaRegStar key={i} className="text-yellow-500" />);
     }
   }
-  return totalStars;
+  return <div className="flex">{totalStars}</div>;
 };
 
 export default Rating;

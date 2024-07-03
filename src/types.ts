@@ -44,6 +44,7 @@ export type Product = {
   countInStock: number;
   rating: number;
   numReviews: number;
+  reviews: Review[];
 };
 
 export type CartItem = Product & { qty: number };
@@ -108,4 +109,11 @@ export type PaymentResult = {
   status: string;
   update_time: string;
   email_address: string;
+};
+
+export type Review = {
+  user: IUser;
+  name: string;
+  rating: number;
+  comment: string;
 };

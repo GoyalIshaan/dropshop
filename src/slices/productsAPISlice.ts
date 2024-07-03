@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { PRODUCTS_URL } from '../constants';
-import { Product } from '../types';
+import { Product, Review } from '../types';
 import { apiSlice } from './apiSlice';
 
 export const productsAPISlice = apiSlice.injectEndpoints({
@@ -46,6 +46,24 @@ export const productsAPISlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Product'],
     }),
+    createReview: builder.mutation<
+      string,
+      { id: string; rating: number; comment: string }
+    >({
+      query: ({ id, rating, comment }) => ({
+        url: `${PRODUCTS_URL}/${id}/reviews`,
+        method: 'POST',
+        body: { rating, comment },
+      }),
+    }),
+    getReviews: builder.query<Review[], string>({
+      query: id => ({
+        url: `${PRODUCTS_URL}/${id}/reviews`,
+        method: 'GET',
+      }),
+      keepUnusedDataFor: 5,
+      providesTags: ['Product'],
+    }),
   }),
   overrideExisting: false,
 });
@@ -57,4 +75,6 @@ export const {
   useUpdateProductMutation,
   useUploadImageMutation,
   useDeleteProductMutation,
+  useCreateReviewMutation,
+  useGetReviewsQuery,
 }: any = productsAPISlice;
