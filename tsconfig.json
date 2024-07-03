@@ -1,21 +1,23 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "useDefineForClassFields": true,
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "allowJs": false,
+    "module": "ESNext",
+    "moduleResolution": "Bundler", // or "nodenext" or "bundler" as suggested
+    "allowJs": true,
+    "checkJs": false,
     "skipLibCheck": true,
+    "strict": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "ESNext",
-    "moduleResolution": "Node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
+    "target": "ESNext",
+    "lib": ["ESNext", "DOM"],
+    "jsx": "react-jsx",
+    "incremental": true,
+    "outDir": "./dist"
   },
-  "include": ["src"],
-  "exclude": ["src/server"]
+  "include": [
+    "src/**/*",
+    "node_modules/rollup/dist/parseAst.d.ts" // include this to resolve the missing module
+  ],
+  "exclude": ["node_modules"]
 }

@@ -11,7 +11,8 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "import": "tsx seeder.ts",
-    "destroy": "tsx seeder.ts -d"
+    "destroy": "tsx seeder.ts -d",
+    "install-types": "npm i --save-dev @types/react-slick @types/react-helmet @types/react-dom @types/jsonwebtoken @types/bcryptjs"
   },
   "dependencies": {
     "@hookform/error-message": "^2.0.1",
@@ -20,7 +21,6 @@
     "@reduxjs/toolkit": "^2.2.6",
     "@types/multer": "^1.4.11",
     "@types/react-redux": "^7.1.33",
-    "@types/react-router-dom": "^5.3.3",
     "@types/react-toastify": "^4.1.0",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
@@ -49,11 +49,12 @@
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/cookie-parser": "^1.4.7",
-    "@types/express": "^4.17.21",
+    "@types/express": "^4.17.11",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@types/react-helmet": "^6.1.11",
+    "@types/react-router-dom": "^5.1.8",
     "@types/react-slick": "^0.23.13",
     "@typescript-eslint/eslint-plugin": "^7.13.1",
     "@typescript-eslint/parser": "^7.13.1",
