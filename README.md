@@ -1,6 +1,7 @@
 # DropShop
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+
 [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
 [![Redux](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)](https://redux.js.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
@@ -22,6 +23,9 @@ DropShop is a cutting-edge, full-stack e-commerce application built with modern 
 - 💳 Streamlined checkout process
 - 📦 Order tracking and history
 - 🧑‍💼 Powerful admin panel for product, order, and user management
+- 📝 Efficient form handling with React Hook Form
+- 🔒 Enhanced security with bcryptjs password hashing
+- 🎠 Smooth product carousels with React Slick
 
 ## 🛠️ Technology Stack
 
@@ -30,12 +34,15 @@ DropShop is a cutting-edge, full-stack e-commerce application built with modern 
 - **Redux Toolkit**: State management for complex application logic
 - **Tailwind CSS**: Utility-first CSS framework for rapid UI development
 - **Vite**: Next-generation frontend tooling for enhanced developer experience
+- **React Hook Form**: Efficient, flexible and extensible forms with easy-to-use validation
+- **React Slick**: Carousel component for smooth product showcases
 
 ### Backend
 - **Express.js**: Fast, unopinionated, minimalist web framework for Node.js
 - **Node.js**: JavaScript runtime built on Chrome's V8 JavaScript engine
 - **MongoDB**: Flexible and scalable document database
 - **Mongoose**: Elegant MongoDB object modeling for Node.js
+- **bcryptjs**: Library for hashing and comparing passwords securely
 
 ### Additional Technologies
 - **TypeScript**: Adding static typing to enhance code quality and maintainability
@@ -81,7 +88,17 @@ DropShop is a cutting-edge, full-stack e-commerce application built with modern 
 ```
 dropshop/
 ├── client/             # Frontend React application
+│   ├── src/
+│   │   ├── components/ # Reusable React components
+│   │   ├── hooks/      # Custom React hooks
+│   │   ├── pages/      # Page components
+│   │   ├── slices/     # Redux Toolkit slices
+│   │   └── utils/      # Utility functions
 ├── server/             # Backend Express.js server
+│   ├── controllers/    # Request handlers
+│   ├── models/         # Mongoose models
+│   ├── routes/         # API routes
+│   └── middleware/     # Custom middleware
 ├── shared/             # Shared types and utilities
 ├── docs/               # Documentation files
 ├── scripts/            # Build and deployment scripts
@@ -104,4 +121,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Your Name - [@your_twitter](https://twitter.com/your_twitter) - email@example.com
 
-Project Link: [https://github.com/yourusername/dropshop](https://github.com/yourusername/dropshop)****
+Project Link: [https://github.com/yourusername/dropshop](https://github.com/yourusername/dropshop)
