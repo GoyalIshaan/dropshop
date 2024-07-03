@@ -10,9 +10,16 @@ import { Product } from '../types';
 import { toast } from 'react-toastify';
 import ProductEdit from './AdminProductEdit';
 import AdminOrderListItem from '../components/AdminOrderListItem';
+import Pagination from '../components/Pagination';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 const ProductList: React.FC = () => {
-  const { data: products, isLoading, isError, refetch } = useGetProductsQuery();
+  const { pageNumber = 1 } = useParams<{ pageNumber: string }>();
+  const navigate = useNavigate();
+  const { data, isLoading, isError, refetch } = useGetProductsQuery({
+    pageNumber: Number(pageNumber),
+  });
   const [createProduct, { isLoading: isCreating }] = useCreateProductMutation();
   const [deleteProduct] = useDeleteProductMutation();
 
@@ -54,11 +61,15 @@ const ProductList: React.FC = () => {
     await refetch();
   };
 
+  const handlePageChange = (page: number) => {
+    navigate(`/productlist/page/${page}`);
+  };
+
   if (isLoading) {
     return <Loader />;
   }
 
-  if (isError || !products) {
+  if (isError || !data.products) {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-red-500 text-4xl">
@@ -71,6 +82,13 @@ const ProductList: React.FC = () => {
 
   return (
     <div className="container mx-auto p-6">
+      <Helmet>
+        <title>Admin : Product List</title>
+        <meta
+          name="description"
+          content="Welcome to the home page of my app."
+        />
+      </Helmet>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-semibold text-gray-800">Product List</h2>
         <button
@@ -82,7 +100,7 @@ const ProductList: React.FC = () => {
         </button>
       </div>
       <ul className="space-y-4">
-        {products.map((product: Product) => (
+        {data.products.map((product: Product) => (
           <AdminOrderListItem
             key={product._id}
             product={product}
@@ -108,6 +126,11 @@ const ProductList: React.FC = () => {
           </div>
         </div>
       )}
+      <Pagination
+        pages={data.pages}
+        page={data.page}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 };

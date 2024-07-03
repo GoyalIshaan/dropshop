@@ -7,7 +7,8 @@ import { setCredentials } from '../slices/authSlice';
 import { useGetMyOrdersQuery } from '../slices/ordersAPISlice';
 import { useProfileMutation } from '../slices/userAPISlice';
 import { RootState } from '../store';
-import { IUser, OrderItemsElement } from '../types';
+import { IUser, OrderState } from '../types';
+import { Helmet } from 'react-helmet';
 
 const ProfileUpdate: React.FC = () => {
   const { userInfo } = useSelector((state: RootState) => state.auth);
@@ -39,6 +40,13 @@ const ProfileUpdate: React.FC = () => {
 
   return (
     <div className="container mx-auto p-6 flex flex-col md:flex-row gap-6">
+      <Helmet>
+        <title>Profile</title>
+        <meta
+          name="description"
+          content="Welcome to the home page of my app."
+        />
+      </Helmet>
       <div className="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-lg">
         <h2 className="text-2xl font-semibold mb-4 text-gray-800">
           Update Profile
@@ -51,12 +59,7 @@ const ProfileUpdate: React.FC = () => {
             >
               Name
             </label>
-            <input
-              id="name"
-              type="text"
-              {...register('name', { required: 'Name is required' })}
-              className="block w-full p-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200"
-            />
+            <input {...register('name', { required: 'Name is required' })} />
             {errors.name && (
               <p className="text-red-500 text-sm">{errors.name.message}</p>
             )}
@@ -69,7 +72,6 @@ const ProfileUpdate: React.FC = () => {
               Email
             </label>
             <input
-              id="email"
               type="email"
               {...register('email', { required: 'Email is required' })}
               className="block w-full p-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200"
@@ -81,7 +83,7 @@ const ProfileUpdate: React.FC = () => {
           <button
             type="submit"
             className="w-full h-12 py-2 px-4 bg-indigo-600 text-white rounded-md shadow-md hover:bg-indigo-700 transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 flex items-center justify-center"
-            disbaled={isLoading}
+            disabled={isLoading}
           >
             Update Profile
           </button>
@@ -96,7 +98,7 @@ const ProfileUpdate: React.FC = () => {
             <p>Loading...</p>
           ) : (
             <div className="space-y-4">
-              {orders?.map((order: OrderItemsElement) => (
+              {orders?.map((order: OrderState) => (
                 <div key={order._id} className="bg-gray-100 p-4 rounded-lg">
                   <Link to={`/order/${order._id}`}>
                     <h3 className="text-lg font-semibold">

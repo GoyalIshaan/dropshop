@@ -11,6 +11,7 @@ import { addToCart } from '../slices/cartSlice';
 import Quantity from '../components/Quantity';
 import Rating from '../components/Rating';
 import ReviewSection from '../components/Review';
+import { Helmet } from 'react-helmet';
 
 const ProductDetails: React.FC = () => {
   const [quantity, setQuantity] = useState(1);
@@ -28,6 +29,13 @@ const ProductDetails: React.FC = () => {
 
   return (
     <div className="container mt-8 mx-auto p-4 flex flex-col gap-8">
+      <Helmet>
+        <title>{product.name}</title>
+        <meta
+          name="description"
+          content="Welcome to the home page of my app."
+        />
+      </Helmet>
       <div className="flex flex-col md:flex-row gap-8">
         <img
           src={`../../${product.image}`}

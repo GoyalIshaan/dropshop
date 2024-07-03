@@ -1,5 +1,5 @@
 import React from 'react';
-import IUser from '../types';
+import { IUser } from '../types';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 
 type AdminUserListItemProps = {

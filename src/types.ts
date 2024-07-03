@@ -85,6 +85,7 @@ export type OrderItemsElement = {
 };
 
 export type OrderState = {
+  _id: string;
   orderItems: OrderItemsElement[];
   user: IUser;
   shippingAddress: ShippingAddress;

@@ -21,6 +21,8 @@ import AdminRoute from './components/AdminRoute';
 import OrderList from './pages/AdminOrderList';
 import ProductList from './pages/AdminProductsList';
 import UserList from './pages/AdminUserList';
+import SearchResults from './pages/SearchResults';
+import { Helmet } from 'react-helmet';
 
 export default function App() {
   const [paypalClientId, setPaypalClientId] = useState('');
@@ -40,7 +42,16 @@ export default function App() {
       path: '/',
       element: <AppLayout />,
       children: [
-        { index: true, element: <Products /> },
+        {
+          path: '/',
+          element: <Products />,
+          children: [
+            {
+              path: '/page/:pageNumber',
+              element: <Products />,
+            },
+          ],
+        },
         { path: 'products/:id', element: <ProductDetails /> },
         { path: 'cart', element: <Cart /> },
         { path: 'login', element: <Login /> },
@@ -94,6 +105,7 @@ export default function App() {
               <ProductList />
             </AdminRoute>
           ),
+          children: [{ path: 'page/:pageNumber', element: <ProductList /> }],
         },
         {
           path: 'userlist',
@@ -102,6 +114,10 @@ export default function App() {
               <UserList />
             </AdminRoute>
           ),
+        },
+        {
+          path: 'search/:keyword',
+          element: <SearchResults />,
         },
       ],
     },
@@ -112,6 +128,7 @@ export default function App() {
     <Provider store={store}>
       {paypalClientId && (
         <PayPalScriptProvider options={{ clientId: paypalClientId }}>
+          <Helmet />
           <RouterProvider router={router} />
         </PayPalScriptProvider>
       )}

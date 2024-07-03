@@ -1,5 +1,5 @@
 import React from 'react';
-import { cartItem, Product } from '../types';
+import { CartItem, Product } from '../types';
 
 interface QuantityProps {
   product?: Product;
@@ -7,7 +7,7 @@ interface QuantityProps {
   setQuantity:
     | React.Dispatch<React.SetStateAction<number>>
     | ((newQuantity: number) => void);
-  cartItem?: cartItem;
+  cartItem?: CartItem;
 }
 
 const Quantity: React.FC<QuantityProps> = ({

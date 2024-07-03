@@ -7,6 +7,7 @@ import { useLoginMutation } from '../slices/userAPISlice';
 import { setCredentials } from '../slices/authSlice';
 import { toast } from 'react-toastify';
 import { RootState } from '../store';
+import { Helmet } from 'react-helmet';
 
 const Login: React.FC = () => {
   const {
@@ -46,6 +47,13 @@ const Login: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
+      <Helmet>
+        <title>Login | DropShop</title>
+        <meta
+          name="description"
+          content="Welcome to the home page of my app."
+        />
+      </Helmet>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="p-8 bg-white rounded-lg shadow-xl w-full max-w-md"

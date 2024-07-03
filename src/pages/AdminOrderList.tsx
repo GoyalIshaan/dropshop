@@ -4,6 +4,7 @@ import { useGetOrdersQuery } from '../slices/ordersAPISlice';
 import Loader from '../components/Loader';
 import { FaTimesCircle, FaCheckCircle } from 'react-icons/fa';
 import { FinalOrderState } from '../types';
+import { Helmet } from 'react-helmet';
 
 const OrderList: React.FC = () => {
   const { data: orders, isLoading, isError } = useGetOrdersQuery();
@@ -27,6 +28,13 @@ const OrderList: React.FC = () => {
 
   return (
     <div className="container mx-auto p-6">
+      <Helmet>
+        <title>Admin : OrderList</title>
+        <meta
+          name="description"
+          content="Welcome to the home page of my app."
+        />
+      </Helmet>
       <h2 className="text-2xl font-semibold mb-4 text-gray-800">Order List</h2>
       <ul className="space-y-4">
         {orders.map((order: FinalOrderState) => (

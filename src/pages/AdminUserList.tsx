@@ -9,6 +9,7 @@ import { IUser } from '../types';
 import { toast } from 'react-toastify';
 import UserEdit from './AdminUserEdit';
 import AdminUserListItem from '../components/AdminUserListItem';
+import { Helmet } from 'react-helmet';
 
 const UserList: React.FC = () => {
   const { data: users, isLoading, isError, refetch } = useGetUsersQuery();
@@ -55,6 +56,13 @@ const UserList: React.FC = () => {
 
   return (
     <div className="container mx-auto p-6">
+      <Helmet>
+        <title>Admin : UserList</title>
+        <meta
+          name="description"
+          content="Welcome to the home page of my app."
+        />
+      </Helmet>
       <h2 className="text-2xl font-semibold text-gray-800 mb-4">User List</h2>
       <ul className="space-y-4">
         {users.map((user: IUser) => (

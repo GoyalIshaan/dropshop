@@ -27,6 +27,7 @@ import {
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
+import { Helmet } from 'react-helmet';
 
 const OrderDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -100,7 +101,7 @@ const OrderDetails: React.FC = () => {
   }
 
   async function onApprove(data: any, actions: any): Promise<void> {
-    console.log('PayPal payment approved with actions:', actions);
+    console.log('PayPal onApprove:', data);
     if (actions.order) {
       try {
         const details = (await actions.order.capture()) as OrderState;
@@ -168,10 +169,16 @@ const OrderDetails: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 pt-12 max-w-4xl">
+      <Helmet>
+        <title>Order: {id}</title>
+        <meta
+          name="description"
+          content="Welcome to the home page of my app."
+        />
+      </Helmet>
       <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">
         Order Details
       </h1>
-
       <div className="space-y-8">
         <DetailsSection
           title="Shipping Details"
