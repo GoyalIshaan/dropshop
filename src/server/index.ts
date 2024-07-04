@@ -23,6 +23,7 @@ app.use(express.json());
 // Middleware to parse URL encoded data
 app.use(express.urlencoded({ extended: true }));
 
+// API routes
 app.use('/api/products', productRouter);
 app.use('/api/users', userRouter);
 app.use('/api/orders', orderRouter);
@@ -37,13 +38,18 @@ app.get('/api/config/paypal', (_req, res) =>
 const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
-// Building rules
+// Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '/dist')));
 
+  // Serve the React app
   app.get('*', (_req, res) =>
     res.sendFile(path.resolve(__dirname, 'dist', 'index.html')),
   );
+} else {
+  app.get('/', (_req, res) => {
+    res.send('API is running....');
+  });
 }
 
 // Error Handling Middleware
