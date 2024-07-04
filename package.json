@@ -8,7 +8,6 @@
     "start": "tsx watch src/server",
     "both": "concurrently \"npm run dev\" \"npm run start\" --kill-others --success first",
     "build": "vite build",
-    "prebuild": "npm install",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "import": "tsx seeder.ts",
