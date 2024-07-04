@@ -83,28 +83,6 @@ DropShop is a cutting-edge, full-stack e-commerce application built with modern 
    npm run dev
    ```
 
-## 📊 Project Structure
-
-```
-dropshop/
-├── client/             # Frontend React application
-│   ├── src/
-│   │   ├── components/ # Reusable React components
-│   │   ├── hooks/      # Custom React hooks
-│   │   ├── pages/      # Page components
-│   │   ├── slices/     # Redux Toolkit slices
-│   │   └── utils/      # Utility functions
-├── server/             # Backend Express.js server
-│   ├── controllers/    # Request handlers
-│   ├── models/         # Mongoose models
-│   ├── routes/         # API routes
-│   └── middleware/     # Custom middleware
-├── shared/             # Shared types and utilities
-├── docs/               # Documentation files
-├── scripts/            # Build and deployment scripts
-└── README.md           # You are here
-```
-
 ## 🌐 Deployment
 
 Detailed deployment instructions can be found in the [Deployment Guide](docs/deployment.md).
@@ -119,6 +97,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## 📬 Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_twitter) - email@example.com
-
-Project Link: [https://github.com/yourusername/dropshop](https://github.com/yourusername/dropshop)
+Ishaan Goyal - [@IshaanGoyal05](https://twitter.com/IshaanGoyal05) - goyalishaan2005@gmail.com
